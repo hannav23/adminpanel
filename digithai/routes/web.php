@@ -23,7 +23,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::resource('companies', CompanyController::class);
+    Route::resource('companies', CompanyController::class)->names([
+        'index' => 'companies.index',
+        'create' => 'companies.create',
+        'store' => 'companies.store',
+        'show' => 'companies.show',
+        'edit' => 'companies.edit',
+        'update' => 'companies.update',
+        'destroy' => 'companies.destroy',
+    ]);
 });
 
 require __DIR__.'/auth.php';

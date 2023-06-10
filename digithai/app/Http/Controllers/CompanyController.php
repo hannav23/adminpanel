@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CompanyRequest;
+use App\Models\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -13,7 +15,8 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $companies = Company::paginate(10);
+        return view('companies.index')->with(['companies' => $companies]);
     }
 
     /**
@@ -23,62 +26,72 @@ class CompanyController extends Controller
      */
     public function create()
     {
-        //
+        return view('companies.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $company = Company::create($validatedData);
+
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $path = $logo->storeAs('logos', $company->id . '.' . $logo->getClientOriginalExtension());
+            $company->logo = $path;
+            $company->save();
+        }
+
+        return redirect()->route('companies.show', $company->id)->with('success', 'Company created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Company $company)
     {
-        //
+        return view('companies.show')->with(['company' => $company]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        return view('companies.edit')->with(['company' => $company]);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified company in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  UpdateCompanyRequest  $request
+     * @param  \App\Models\Company  $company
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, Company $company)
     {
-        //
+        $company->update($request->validated());
+
+        return redirect()->route('companies.index')->with('success', 'Company updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return redirect()->route('companies.index')->with('success', 'Company deleted successfully.');
     }
 }

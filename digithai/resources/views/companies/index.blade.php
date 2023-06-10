@@ -1,7 +1,5 @@
-@extends('layouts.app')
-
-@section('content')
-    <div class="container">
+<x-app-layout>
+    <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
@@ -25,7 +23,7 @@
                             <tbody>
                                 @foreach ($companies as $company)
                                     <tr>
-                                        <td>{{ $company->name }}</td>
+                                        <td><a href="{{ route('companies.show', $company->id) }}">{{ $company->name }}</a></td>
                                         <td>{{ $company->address }}</td>
                                         <td>{{ $company->email }}</td>
                                         <td>
@@ -41,16 +39,19 @@
                                             <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                                <button type="submit" class="btn btn-danger btn-sm" style="background-color: #dc3545;" onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
                                 @endforeach
                             </tbody>
                         </table>
+
+                        {{ $companies->links() }} <!-- Add pagination links -->
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+</x-app-layout>
