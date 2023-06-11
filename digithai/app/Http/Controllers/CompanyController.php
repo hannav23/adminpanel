@@ -81,6 +81,13 @@ class CompanyController extends Controller
     {
         $company->update($request->validated());
 
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $path = $logo->storeAs('logos', $company->id . '.' . $logo->getClientOriginalExtension());
+            $company->logo = $path;
+            $company->save();
+        }
+
         return redirect()->route('companies.index')->with('success', 'Company updated successfully.');
     }
 

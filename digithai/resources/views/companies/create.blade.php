@@ -6,7 +6,7 @@
                     <div class="card-header">Create Company</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('companies.store') }}">
+                        <form enctype="multipart/form-data" method="POST" action="{{ route('companies.store') }}">
                             @csrf
 
                             <div class="form-group row">
@@ -55,7 +55,7 @@
                                 <label for="logo" class="col-md-4 col-form-label text-md-right">Logo</label>
 
                                 <div class="col-md-6">
-                                    <input id="logo" type="file" class="form-control-file @error('logo') is-invalid @enderror" name="logo">
+                                    <input id="logo" type="file" accept="image/*" class="form-control-file @error('logo') is-invalid @enderror" name="logo">
 
                                     @error('logo')
                                         <span class="invalid-feedback" role="alert">

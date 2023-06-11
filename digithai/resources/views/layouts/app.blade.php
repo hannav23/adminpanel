@@ -24,11 +24,11 @@
             @include('layouts.navigation')
 
             <!-- Page Heading -->
-            @if (session('success'))
+            {{-- @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
                 </div>
-            @endif
+            @endif --}}
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -44,5 +44,30 @@
                 {{ $slot }}
             </main>
         </div>
+        <!-- Success Modal -->
+        <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Success!</h5>
+                        <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{session('success')}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" style="background-color: #007bff;" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @if (session('success'))
+            <script>
+                $(document).ready(function() {
+                    $('#successModal').modal('show');
+                });
+            </script>
+        @endif
     </body>
 </html>

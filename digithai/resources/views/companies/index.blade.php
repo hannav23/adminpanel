@@ -1,4 +1,10 @@
 <x-app-layout>
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="container mt-3">
         <div class="row">
             <div class="col-md-12">
@@ -28,7 +34,7 @@
                                         <td>{{ $company->email }}</td>
                                         <td>
                                             @if ($company->logo)
-                                                <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo" width="50">
+                                                <img src="{{ asset($company->logo) }}" alt="Company Logo" width="50">
                                             @else
                                                 N/A
                                             @endif

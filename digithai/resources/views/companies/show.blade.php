@@ -16,7 +16,7 @@
                     <th>Logo</th>
                     <td>
                         @if ($company->logo)
-                            <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo" class="img-thumbnail" width="100">
+                            <img src="{{ asset($company->logo) }}" alt="Company Logo" class="img-thumbnail" width="100">
                         @else
                             No logo available.
                         @endif
