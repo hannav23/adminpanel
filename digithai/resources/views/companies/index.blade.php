@@ -47,7 +47,9 @@
                             </tbody>
                         </table>
 
-                        {{ $companies->links() }} <!-- Add pagination links -->
+                        <div class="d-flex justify-content-center">
+                            {{ $companies->links() }}
+                        </div>
 
                     </div>
                 </div>

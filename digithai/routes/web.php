@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('login');
 });
 
 Route::get('/dashboard', function () {
@@ -31,6 +32,15 @@ Route::group(['middleware' => 'auth'], function () {
         'edit' => 'companies.edit',
         'update' => 'companies.update',
         'destroy' => 'companies.destroy',
+    ]);
+    Route::resource('employees', EmployeeController::class)->names([
+        'index' => 'employees.index',
+        'create' => 'employees.create',
+        'store' => 'employees.store',
+        'show' => 'employees.show',
+        'edit' => 'employees.edit',
+        'update' => 'employees.update',
+        'destroy' => 'employees.destroy',
     ]);
 });
 
